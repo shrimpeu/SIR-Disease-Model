@@ -1,2 +1,2 @@
 # SIROutbreakSimulator
-A Disease Model and Simulation Python program
+An SIR Disease Model and Simulation Python program
