@@ -11,8 +11,9 @@ HORRIBLE_YELLOW = (190, 175, 50)
 
 BACKGROUND = WHITE
 
-
+# This class creates a dot object that is used in the simulation
 class Dot(pygame.sprite.Sprite):
+    # Initialize the dot object with given parameters
     def __init__(
         self,
         x,
@@ -25,6 +26,7 @@ class Dot(pygame.sprite.Sprite):
         randomize=False,
     ):
         super().__init__()
+        # Create a surface to draw a circle on
         self.image = pygame.Surface([radius * 2, radius * 2])
         self.image.fill(BACKGROUND)
         pygame.draw.circle(
@@ -42,39 +44,50 @@ class Dot(pygame.sprite.Sprite):
         self.WIDTH = width
         self.HEIGHT = height
 
+    # Update the position and state of the dot
     def update(self):
-
+        # Update the position based on the velocity
         self.pos += self.vel
 
         x, y = self.pos
 
         # Periodic boundary conditions
+        # If the dot goes off the left edge of the screen, wrap it around to the right side
         if x < 0:
             self.pos[0] = self.WIDTH
             x = self.WIDTH
+        # If the dot goes off the right edge of the screen, wrap it around to the left side
         if x > self.WIDTH:
             self.pos[0] = 0
             x = 0
+        # If the dot goes off the top edge of the screen, wrap it around to the bottom side
         if y < 0:
             self.pos[1] = self.HEIGHT
             y = self.HEIGHT
+        # If the dot goes off the bottom edge of the screen, wrap it around to the top side
         if y > self.HEIGHT:
             self.pos[1] = 0
             y = 0
 
+        # Set the position of the dot's rectangle
         self.rect.x = x
         self.rect.y = y
 
+        # Normalize the velocity if it is too high
         vel_norm = np.linalg.norm(self.vel)
         if vel_norm > 3:
             self.vel /= vel_norm
 
+        # Add randomness to the velocity
         if self.randomize:
             self.vel += np.random.rand(2) * 2 - 1
 
+        # Update the killswitch
         if self.killswitch_on:
             self.cycles_to_fate -= 1
 
+            # Check if the killswitch has expired and decide 
+            # whether to kill or recover the dot
             if self.cycles_to_fate <= 0:
                 self.killswitch_on = False
                 some_number = np.random.rand()
@@ -83,6 +96,7 @@ class Dot(pygame.sprite.Sprite):
                 else:
                     self.recovered = True
 
+    # Respawn the dot at a new location with the same velocity and color
     def respawn(self, color, radius=5):
         return Dot(
             self.rect.x,
@@ -92,13 +106,20 @@ class Dot(pygame.sprite.Sprite):
             color=color,
             velocity=self.vel,
         )
-
+    
+    """
+    Sets a "killswitch" on the dot, which will cause it to be
+    killed or recover after a certain number of cycles
+    """
     def killswitch(self, cycles_to_fate=20, mortality_rate=0.2):
         self.killswitch_on = True
+        # Set the number of cycles until the fate of the dot is decided
         self.cycles_to_fate = cycles_to_fate
+        # Set the mortality rate of the dot
+        #(the probability that the dot will be killed if the killswitch is triggered)
         self.mortality_rate = mortality_rate
 
-
+# Add Comments Here
 class Simulation:
     def __init__(self, width=600, height=480):
         self.WIDTH = width
