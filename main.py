@@ -9,6 +9,12 @@ PURPLE = (130, 0, 130)
 GREY = (230, 230, 230)
 HORRIBLE_YELLOW = (190, 175, 50)
 
+# Caption and Icon
+pygame.display.set_caption("SIROutbreakSimulator")
+icon = pygame.image.load("logo.png")
+pygame.display.set_icon(icon)
+
+# Background
 BACKGROUND = WHITE
 
 # This class creates a dot object that is used in the simulation
@@ -221,7 +227,7 @@ class Simulation:
             # updates the positions of the dots and the stats surface in each time step
             self.all_container.update()
 
-            screen.fill(BACKGROUND)
+            screen.fill(WHITE)
 
             # Update stats
             stats_height = stats.get_height()
@@ -287,7 +293,7 @@ class Simulation:
 
 
 if __name__ == "__main__":
-    covid = Simulation(1000, 1000)
+    covid = Simulation(600, 480)
     covid.n_susceptible = 100
     covid.n_quarantined = 0
     covid.n_infected = 10
