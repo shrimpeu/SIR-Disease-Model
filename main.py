@@ -140,7 +140,7 @@ class Simulation:
         self.n_susceptible = 20
         self.n_infected = 1
         self.n_quarantined = 0
-        self.T = 1000
+        self.T = 3000
         self.cycles_to_fate = 20
         self.mortality_rate = 0.2
     
@@ -287,10 +287,10 @@ class Simulation:
 
 
 if __name__ == "__main__":
-    covid = Simulation(600, 480)
+    covid = Simulation(1000, 1000)
     covid.n_susceptible = 100
     covid.n_quarantined = 0
-    covid.n_infected = 5
+    covid.n_infected = 10
     covid.cycles_to_fate = 200
     covid.mortality_rate = 0.2
     covid.start(randomize=True)
