@@ -56,7 +56,7 @@ class Dot(pygame.sprite.Sprite):
         super().__init__()
         # Create a surface to draw a circle on
         self.image = pygame.Surface([radius * 2, radius * 2])
-        self.image.fill(BACKGROUND)
+        self.image.fill(GREEN)
         pygame.draw.circle(
             self.image, color, (radius, radius), radius
         )
