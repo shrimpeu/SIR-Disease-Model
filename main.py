@@ -17,6 +17,28 @@ pygame.display.set_icon(icon)
 # Background
 BACKGROUND = WHITE
 
+# Define font
+font_style = "Arial.tff"
+font_size = 36
+pygame.init()
+
+# Background for the Image
+s_width = 600
+s_height = 480
+screen = pygame.display.set_mode((s_width, s_height))
+bg_image = pygame.image.load("grass.jpeg")
+bg_image = pygame.transform.scale(bg_image, (600, 480))
+# Load the icon image
+icon_image = pygame.image.load("sirlogotrans.png")
+
+# Set the icon
+pygame.display.set_icon(icon_image)
+
+# Set the window title
+pygame.display.set_caption("SIR Outbreak Simulator")
+
+# Red = Infected , Blue = Unsuspected, Purple = Recovered, Yellow = Death
+
 # This class creates a dot object that is used in the simulation
 class Dot(pygame.sprite.Sprite):
     # Initialize the dot object with given parameters
@@ -228,7 +250,10 @@ class Simulation:
             self.all_container.update()
 
             screen.fill(WHITE)
-
+           
+            # Blit the background image to the screen
+            screen.blit(bg_image, (0, 0))
+            
             # Update stats
             stats_height = stats.get_height()
             stats_width = stats.get_width()
