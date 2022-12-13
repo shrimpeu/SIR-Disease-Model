@@ -29,7 +29,7 @@ screen = pygame.display.set_mode((s_width, s_height))
 bg_image = pygame.image.load("grass.jpeg")
 bg_image = pygame.transform.scale(bg_image, (600, 480))
 # Load the icon image
-icon_image = pygame.image.load("sirlogotrans.png")
+icon_image = pygame.image.load("logo.png")
 
 # Set the icon
 pygame.display.set_icon(icon_image)
