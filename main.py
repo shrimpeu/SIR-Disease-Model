@@ -144,12 +144,12 @@ class Simulation:
         self.cycles_to_fate = 20
         self.mortality_rate = 0.2
     
-     """
-     Initializes Pygame and creates Dot objects for each individual in the
-     population, with randomly assigned positions and velocities. It also
-     sets up a clock and a stats surface for tracking the progress of the
-     simulation
-     """
+    """
+    Initializes Pygame and creates Dot objects for each individual in the
+    population, with randomly assigned positions and velocities. It also
+    sets up a clock and a stats surface for tracking the progress of the
+    simulation
+    """
     def start(self, randomize=False):
         self.N = (
             self.n_susceptible + self.n_infected + self.n_quarantined
