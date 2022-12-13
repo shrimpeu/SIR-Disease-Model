@@ -119,8 +119,15 @@ class Dot(pygame.sprite.Sprite):
         #(the probability that the dot will be killed if the killswitch is triggered)
         self.mortality_rate = mortality_rate
 
-# Add Comments Here
+# sets up and simulates the spread of an infectious disease in a population of people represented by Dot objects. 
 class Simulation:
+    """
+    Initializes the width and height of the simulation,
+    as well as the number of susceptible, infected,
+    recovered individuals, total number of time steps 'T',
+    the number of cycles before a dot's fate is determined,
+    and the mortality rate
+    """
     def __init__(self, width=600, height=480):
         self.WIDTH = width
         self.HEIGHT = height
@@ -136,9 +143,14 @@ class Simulation:
         self.T = 1000
         self.cycles_to_fate = 20
         self.mortality_rate = 0.2
-
+    
+     """
+     Initializes Pygame and creates Dot objects for each individual in the
+     population, with randomly assigned positions and velocities. It also
+     sets up a clock and a stats surface for tracking the progress of the
+     simulation
+     """
     def start(self, randomize=False):
-
         self.N = (
             self.n_susceptible + self.n_infected + self.n_quarantined
         )
@@ -202,10 +214,11 @@ class Simulation:
         clock = pygame.time.Clock()
 
         for i in range(self.T):
+            # handles quitting the simulation if the user closes the window
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
-
+            # updates the positions of the dots and the stats surface in each time step
             self.all_container.update()
 
             screen.fill(BACKGROUND)
