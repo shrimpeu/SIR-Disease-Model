@@ -1,6 +1,7 @@
 import pygame, sys
 import numpy as np
 
+# define colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (0, 100, 255)
@@ -18,11 +19,6 @@ pygame.display.set_icon(icon)
 # Background
 BACKGROUND = WHITE
 
-# Define font
-font_style = "Arial.tff"
-font_size = 36
-pygame.init()
-
 # Background for the Image
 s_width = 600
 s_height = 480
@@ -38,21 +34,22 @@ pygame.display.set_icon(icon_image)
 # Set the window title
 pygame.display.set_caption("SIR Outbreak Simulator")
 
-# Red = Infected , Blue = Unsuspected, Purple = Recovered, Yellow = Death
+
+# Red = Infected , Blue = Susceptible and Quarantined, Purple = Recovered, Yellow = Death
 
 # This class creates a dot object that is used in the simulation
 class Dot(pygame.sprite.Sprite):
     # Initialize the dot object with given parameters
     def __init__(
-        self,
-        x,
-        y,
-        width,
-        height,
-        color=BLACK,
-        radius=5,
-        velocity=[0, 0],
-        randomize=False,
+            self,
+            x,
+            y,
+            width,
+            height,
+            color=BLACK,
+            radius=5,
+            velocity=[0, 0],
+            randomize=False,
     ):
         super().__init__()
         # Create a surface to draw a circle on
@@ -115,7 +112,7 @@ class Dot(pygame.sprite.Sprite):
         if self.killswitch_on:
             self.cycles_to_fate -= 1
 
-            # Check if the killswitch has expired and decide 
+            # Check if the killswitch has expired and decide
             # whether to kill or recover the dot
             if self.cycles_to_fate <= 0:
                 self.killswitch_on = False
@@ -135,20 +132,22 @@ class Dot(pygame.sprite.Sprite):
             color=color,
             velocity=self.vel,
         )
-    
+
     """
     Sets a "killswitch" on the dot, which will cause it to be
     killed or recover after a certain number of cycles
     """
+
     def killswitch(self, cycles_to_fate=20, mortality_rate=0.2):
         self.killswitch_on = True
         # Set the number of cycles until the fate of the dot is decided
         self.cycles_to_fate = cycles_to_fate
         # Set the mortality rate of the dot
-        #(the probability that the dot will be killed if the killswitch is triggered)
+        # (the probability that the dot will be killed if the killswitch is triggered)
         self.mortality_rate = mortality_rate
 
-# sets up and simulates the spread of an infectious disease in a population of people represented by Dot objects. 
+
+# sets up and simulates the spread of an infectious disease in a population of people represented by Dot objects.
 class Simulation:
     """
     Initializes the width and height of the simulation,
@@ -157,6 +156,7 @@ class Simulation:
     the number of cycles before a dot's fate is determined,
     and the mortality rate
     """
+
     def __init__(self, width=600, height=480):
         self.WIDTH = width
         self.HEIGHT = height
@@ -172,16 +172,17 @@ class Simulation:
         self.T = 3000
         self.cycles_to_fate = 20
         self.mortality_rate = 0.2
-    
+
     """
     Initializes Pygame and creates Dot objects for each individual in the
     population, with randomly assigned positions and velocities. It also
     sets up a clock and a stats surface for tracking the progress of the
     simulation
     """
+
     def start(self, randomize=False):
         self.N = (
-            self.n_susceptible + self.n_infected + self.n_quarantined
+                self.n_susceptible + self.n_infected + self.n_quarantined
         )
 
         pygame.init()
@@ -251,10 +252,10 @@ class Simulation:
             self.all_container.update()
 
             screen.fill(WHITE)
-           
+
             # Blit the background image to the screen
             screen.blit(bg_image, (0, 0))
-            
+
             # Update stats
             stats_height = stats.get_height()
             stats_width = stats.get_width()
@@ -273,7 +274,7 @@ class Simulation:
             stats_graph[t, y_infect:] = pygame.Color(*RED)
             stats_graph[t, :y_dead] = pygame.Color(*HORRIBLE_YELLOW)
             stats_graph[
-                t, y_dead : y_dead + y_recovered
+            t, y_dead: y_dead + y_recovered
             ] = pygame.Color(*PURPLE)
 
             # New infections?
@@ -319,10 +320,12 @@ class Simulation:
 
 
 if __name__ == "__main__":
-    covid = Simulation(600, 480)
-    covid.n_susceptible = 100
-    covid.n_quarantined = 0
-    covid.n_infected = 10
-    covid.cycles_to_fate = 200
-    covid.mortality_rate = 0.2
-    covid.start(randomize=True)
+    disease = Simulation(600, 480)
+    print("Mortality rate -> How lethal the virus would be")
+    disease.n_susceptible = int(input("Enter number of Susceptible people:"))
+    disease.n_quarantined = int(input("Enter number of Quarantined people:"))
+    disease.n_infected = int(input("Enter number of Infected people: "))
+    disease.cycles_to_fate = int(input("Enter how long the virus would stay on its host: "))
+    print("Mortality rate -> How lethal the virus would be")
+    disease.mortality_rate = float(input("Enter the mortality rate of the virus: "))
+    disease.start(randomize=True)
