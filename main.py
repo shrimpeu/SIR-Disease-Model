@@ -13,7 +13,7 @@ RED = (255, 0, 0)
 
 # Caption and Icon
 pygame.display.set_caption("SIROutbreakSimulator")
-icon = pygame.image.load("logo.png")
+icon = pygame.image.load("logo.ico")
 pygame.display.set_icon(icon)
 
 # Background
@@ -25,11 +25,6 @@ s_height = 480
 screen = pygame.display.set_mode((s_width, s_height))
 bg_image = pygame.image.load("grass.jpeg")
 bg_image = pygame.transform.scale(bg_image, (600, 480))
-# Load the icon image
-icon_image = pygame.image.load("logo.png")
-
-# Set the icon
-pygame.display.set_icon(icon_image)
 
 # Set the window title
 pygame.display.set_caption("SIR Outbreak Simulator")
