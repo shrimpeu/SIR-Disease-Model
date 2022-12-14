@@ -8,6 +8,7 @@ GREEN = (50, 150, 50)
 PURPLE = (130, 0, 130)
 GREY = (230, 230, 230)
 HORRIBLE_YELLOW = (190, 175, 50)
+RED = (255, 0, 0)
 
 # Caption and Icon
 pygame.display.set_caption("SIROutbreakSimulator")
@@ -227,7 +228,7 @@ class Simulation:
                 y,
                 self.WIDTH,
                 self.HEIGHT,
-                color=GREEN,
+                color=RED,
                 velocity=vel,
                 randomize=randomize,
             )
@@ -269,7 +270,7 @@ class Simulation:
             )
             y_recovered = int((n_rec_now / n_pop_now) * stats_height)
             stats_graph = pygame.PixelArray(stats)
-            stats_graph[t, y_infect:] = pygame.Color(*GREEN)
+            stats_graph[t, y_infect:] = pygame.Color(*RED)
             stats_graph[t, :y_dead] = pygame.Color(*HORRIBLE_YELLOW)
             stats_graph[
                 t, y_dead : y_dead + y_recovered
@@ -284,7 +285,7 @@ class Simulation:
             )
 
             for guy in collision_group:
-                new_guy = guy.respawn(GREEN)
+                new_guy = guy.respawn(RED)
                 new_guy.vel *= -1
                 new_guy.killswitch(
                     self.cycles_to_fate, self.mortality_rate
