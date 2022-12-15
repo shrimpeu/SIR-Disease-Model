@@ -1,5 +1,6 @@
 import pygame, sys
 import numpy as np
+import pygame.sysfont
 
 # define colors
 BLACK = (0, 0, 0)
@@ -19,12 +20,20 @@ pygame.display.set_icon(icon)
 # Background
 BACKGROUND = WHITE
 
+# Initializing and Defining Font
+font_style = "Arial.tff"
+font_size = 36
+pygame.init()
+
+font = pygame.font.SysFont(font_style, font_size)
+
+
 # Background for the Image
 s_width = 600
 s_height = 480
 screen = pygame.display.set_mode((s_width, s_height))
 bg_image = pygame.image.load("grass.jpeg")
-bg_image = pygame.transform.scale(bg_image, (600, 480))
+bg_image = pygame.transform.scale(bg_image, (900, 600))
 
 # Set the window title
 pygame.display.set_caption("SIR Outbreak Simulator")
@@ -183,6 +192,34 @@ class Simulation:
         pygame.init()
         screen = pygame.display.set_mode([self.WIDTH, self.HEIGHT])
 
+        # For the Legend of the Graph -> Better Comprehension
+
+        window = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+        font = pygame.font.SysFont('Arial', 14)
+        legend = font.render('Legend for Graph:', True, (WHITE))
+        red = font.render('Red: Infected', True, (WHITE))
+        suscep = font.render('Blue: Susceptible', True, (WHITE))
+        recov = font.render('Purple: Recovered', True, (WHITE))
+        dead = font.render('Yellow: Dead', True, (WHITE))
+
+        legend_rect = legend.get_rect()
+        red_rect = red.get_rect()
+        suscep_rect = suscep.get_rect()
+        recov_rect = recov.get_rect()
+        dead_rect = dead.get_rect()
+
+        legend_rect.bottomleft = (260, self.HEIGHT)
+        red_rect.bottomleft = (260, self.HEIGHT)
+        suscep_rect.bottomleft = (260, self.HEIGHT)
+        recov_rect.bottomleft = (260, self.HEIGHT)
+        dead_rect.bottomleft = (260, self.HEIGHT)
+
+        legend_rect.move_ip(0, -530 - legend_rect.height)
+        red_rect.move_ip(0, -505 - red_rect.height)
+        suscep_rect.move_ip(0, -485 - suscep_rect.height)
+        recov_rect.move_ip(0, -465 - recov_rect.height)
+        dead_rect.move_ip(0, -445 - dead_rect.height)
+        
         for i in range(self.n_susceptible):
             x = np.random.randint(0, self.WIDTH + 1)
             y = np.random.randint(0, self.HEIGHT + 1)
@@ -306,17 +343,22 @@ class Simulation:
 
             del stats_graph
             stats.unlock()
+            window.blit(legend, legend_rect)
+            window.blit(red, red_rect)
+            window.blit(suscep, suscep_rect)
+            window.blit(recov, recov_rect)
+            window.blit(dead, dead_rect)
             screen.blit(stats, stats_pos)
             pygame.display.flip()
-
+            pygame.display.update()
+    
             clock.tick(30)
 
         pygame.quit()
 
 
 if __name__ == "__main__":
-    disease = Simulation(600, 480)
-    print("Mortality rate -> How lethal the virus would be")
+    disease = Simulation(900, 600)
     disease.n_susceptible = int(input("Enter number of Susceptible people:"))
     disease.n_quarantined = int(input("Enter number of Quarantined people:"))
     disease.n_infected = int(input("Enter number of Infected people: "))
