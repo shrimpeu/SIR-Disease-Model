@@ -17,8 +17,6 @@ pygame.display.set_caption("SIROutbreakSimulator")
 icon = pygame.image.load("logo.ico")
 pygame.display.set_icon(icon)
 
-# Background
-BACKGROUND = WHITE
 
 # Initializing and Defining Font
 font_style = "Arial.tff"
