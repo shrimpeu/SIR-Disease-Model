@@ -362,7 +362,11 @@ if __name__ == "__main__":
     disease.n_susceptible = int(input("Enter number of Susceptible people:"))
     disease.n_quarantined = int(input("Enter number of Quarantined people:"))
     disease.n_infected = int(input("Enter number of Infected people: "))
-    disease.cycles_to_fate = int(input("Enter how long the virus would stay on its host: "))
-    print("Mortality rate -> How lethal the virus would be")
-    disease.mortality_rate = float(input("Enter the mortality rate of the virus: "))
+    cycles_var = int(input("Enter how long the virus would stay on its host in seconds: "))
+    cycles_converter = cycles_var * 33.3
+    disease.cycles_to_fate = float(cycles_converter)
+    print("\nMortality rate -> How lethal the virus would be")
+    mort_var = float(input("Enter the mortality rate of the virus in percentage: "))
+    mort_converter = mort_var * 0.01
+    disease.mortality_rate = mort_converter
     disease.start(randomize=True)
