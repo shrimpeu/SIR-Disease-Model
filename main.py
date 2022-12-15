@@ -217,7 +217,8 @@ class Simulation:
         suscep_rect.move_ip(0, -485 - suscep_rect.height)
         recov_rect.move_ip(0, -465 - recov_rect.height)
         dead_rect.move_ip(0, -445 - dead_rect.height)
-        
+
+        # Dot for Susceptible
         for i in range(self.n_susceptible):
             x = np.random.randint(0, self.WIDTH + 1)
             y = np.random.randint(0, self.HEIGHT + 1)
@@ -234,6 +235,7 @@ class Simulation:
             self.susceptible_container.add(guy)
             self.all_container.add(guy)
 
+        # Dot for Quarantined
         for i in range(self.n_quarantined):
             x = np.random.randint(0, self.WIDTH + 1)
             y = np.random.randint(0, self.HEIGHT + 1)
@@ -250,6 +252,7 @@ class Simulation:
             self.susceptible_container.add(guy)
             self.all_container.add(guy)
 
+        # Dot for Infected
         for i in range(self.n_infected):
             x = np.random.randint(0, self.WIDTH + 1)
             y = np.random.randint(0, self.HEIGHT + 1)
@@ -266,6 +269,7 @@ class Simulation:
             self.infected_container.add(guy)
             self.all_container.add(guy)
 
+        # stats for graph
         stats = pygame.Surface((self.WIDTH // 4, self.HEIGHT // 4))
         stats.fill(GREY)
         stats.set_alpha(230)
