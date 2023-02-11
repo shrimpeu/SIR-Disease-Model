@@ -358,13 +358,13 @@ class Simulation:
 
         pygame.quit()
 
-
+# For code reausability in other python scripts
 if __name__ == "__main__":
     disease = Simulation(900, 600)
     disease.n_susceptible = int(input("Enter number of Susceptible people:"))
     disease.n_quarantined = int(input("Enter number of Quarantined people:"))
     disease.n_infected = int(input("Enter number of Infected people: "))
-    cycles_var = int(input("Enter how long the virus would stay on its host in seconds: "))
+    cycles_var = int(input("Enter how long the virus would stay on its hos t in seconds: "))
     cycles_converter = cycles_var * 33.3
     disease.cycles_to_fate = float(cycles_converter)
     print("\nMortality rate -> How lethal the virus would be")
